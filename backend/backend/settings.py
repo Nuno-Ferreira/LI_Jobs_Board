@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
+# Load environment variables from .env file
+dotenv.load_dotenv(dotenv_path=BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -23,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7$o_)9%8$-3ejl5bo7w*9no%+ih04#^3a^amd3unhsliy)br=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = environ.get("DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = []
 
@@ -123,3 +127,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# LinkedIn API settings
+LINKEDIN_CLIENT_ID = environ.get("LINKEDIN_CLIENT_ID")
+LINKEDIN_REDIRECT_URI = environ.get("LINKEDIN_REDIRECT_URI")
+LINKEDIN_AUTH_URL = environ.get("LINKEDIN_AUTH_URL")
+LINKEDIN_SCOPE = environ.get("LINKEDIN_SCOPE")
